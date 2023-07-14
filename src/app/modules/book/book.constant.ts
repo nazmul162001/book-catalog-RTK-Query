@@ -1,12 +1,3 @@
-export const bookFilterableField = [
-  'searchTerm',
-  'name',
-  'author',
-  'category',
-  'rating',
-  'group',
-]
+export const bookFilterableField = ['searchTerm', 'title', 'author', 'genre']
 
-export const bookSearchableFields = ['name', 'author', 'category', 'rating', 'group']
-
-export const PriceSearchableFields = ['maxPrice', 'minPrice']
+export const bookSearchableFields = ['title', 'author', 'genre']

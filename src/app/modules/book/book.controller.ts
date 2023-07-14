@@ -7,7 +7,7 @@ import { IBook } from './book.interface'
 import ApiError from '../../../errors/ApiError'
 import pick from '../../../shared/pick'
 import { paginationFields } from '../../../constants/pagination'
-import { PriceSearchableFields, bookFilterableField } from './book.constant'
+import { bookFilterableField } from './book.constant'
 import { jwtHelpers } from '../../../helpers/jwtHelper'
 import config from '../../../config/config'
 import { Secret } from 'jsonwebtoken'
@@ -23,12 +23,11 @@ const createBook: RequestHandler = catchAsync(
       token as string,
       config.jwt.secret as Secret
     )
-    const { userPhoneNumber, role } = verifiedToken
+    const { userEmail } = verifiedToken
 
     const result = await bookService.createNewBook(
-      bookData,
-      userPhoneNumber,
-      role
+      { ...bookData, userEmail }, // Add userEmail to the bookData object
+      userEmail
     )
 
     sendResponse<IBook>(res, {
@@ -40,17 +39,16 @@ const createBook: RequestHandler = catchAsync(
   }
 )
 
+
 // get all books
 const getAllBooks: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
     const filters = pick(req.query, bookFilterableField)
-    const priceQuery = pick(req.query, PriceSearchableFields)
     const paginationOptions = pick(req.query, paginationFields)
 
     const result = await bookService.getAllBooks(
       filters,
       paginationOptions,
-      priceQuery
     )
 
     sendResponse<IBook[]>(res, {
