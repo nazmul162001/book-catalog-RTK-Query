@@ -155,6 +155,11 @@ const updateBook = async (
       throw new Error('Book not found')
     }
 
+    // Compare the userEmail from the token with the userEmail in the book data
+    if (book.userEmail !== userEmail) {
+      throw new Error("You can't update this book")
+    }
+
     const updateBook = await Book.findByIdAndUpdate(id, payload, { new: true })
     return updateBook
   } catch (error) {
