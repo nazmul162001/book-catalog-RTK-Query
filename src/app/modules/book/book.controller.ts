@@ -12,7 +12,8 @@ import { jwtHelpers } from '../../../helpers/jwtHelper'
 import config from '../../../config/config'
 import { Secret } from 'jsonwebtoken'
 import { bookService } from './book.service'
-
+import Book from './book.model'
+const { ObjectId } = require('mongodb');
 // create a new book
 const createBook: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
@@ -120,10 +121,44 @@ const updateBook: RequestHandler = catchAsync(
   }
 )
 
+ //* Add reviews
+ const addReview = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const addReview = req.body.reviews;
+  const result = await Book.updateOne(
+    { _id: id },
+    { $push: { reviews: addReview } },
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Add Review successfully',
+    data: result,
+  });
+});
+
+//* get reviews
+const getAllReview = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id;
+  console.log(id);
+
+  const result = await Book.findOne({ _id: id }).select({ reviews: 1, _id: 0 });
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'get all Review successfully',
+    data: result,
+  });
+}); 
+
 export const BookController = {
   createBook,
   getAllBooks,
   getSingleBook,
   deleteBook,
   updateBook,
+  getAllReview,
+  addReview
 }

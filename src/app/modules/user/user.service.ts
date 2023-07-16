@@ -20,6 +20,17 @@ const createNewUser = async (payload: IUser): Promise<IUser> => {
   }
 }
 
+
+const getAllUsers = async (): Promise<IUser[]> => {
+  try {
+    const users = await User.find()
+    return users
+  } catch (error) {
+    throw error
+  }
+}
+
 export const userService = {
   createNewUser,
+  getAllUsers
 }

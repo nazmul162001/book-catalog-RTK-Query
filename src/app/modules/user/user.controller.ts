@@ -21,6 +21,21 @@ const createUser: RequestHandler = catchAsync(
   }
 )
 
+// get all users
+const getAllUsers: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const users = await userService.getAllUsers()
+
+    sendResponse<IUser[]>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'All users retrieved successfully!',
+      data: users,
+    })
+  }
+)
+
 export const UserController = {
   createUser,
+  getAllUsers,
 }
