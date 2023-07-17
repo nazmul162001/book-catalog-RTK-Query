@@ -6,7 +6,6 @@ type IApiResponse<T> = {
   message?: string | null
   meta?: {
     page: number
-    limit: number
     total: number
   }
   data?: T | null
