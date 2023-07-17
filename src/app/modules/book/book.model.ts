@@ -11,7 +11,6 @@ const bookSchema = new Schema<IBook>(
     // reviews: { type: [String], default: [] },
     reviews: [{ type: String }], 
     image: { type: String, default: '' },
-    status: { type: String, default: 'Display' },
     userEmail: { type: String},
   },
   {

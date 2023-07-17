@@ -153,6 +153,7 @@ const getAllReview = catchAsync(async (req: Request, res: Response) => {
   });
 }); 
 
+
 export const BookController = {
   createBook,
   getAllBooks,
@@ -160,5 +161,5 @@ export const BookController = {
   deleteBook,
   updateBook,
   getAllReview,
-  addReview
+  addReview,
 }

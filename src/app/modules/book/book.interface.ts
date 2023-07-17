@@ -5,7 +5,6 @@ export type IBook = {
   publicationDate: string
   reviews?: string[]
   image?: string
-  status?: string
   userEmail?: string
 }
 
